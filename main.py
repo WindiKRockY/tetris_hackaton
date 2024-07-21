@@ -317,30 +317,36 @@ def new_best_result(window,text_font,best_result=0):
     window.blit(new_best_result_text , (80,310))
     congratulations_music.play()
 
-#відтворення екарану "about"
-def draw_about(window):
-    fonts = pygame.font.Font("fonts/Freeman-Regular.ttf",22)
-    fonts2 = pygame.font.Font("fonts/Freeman-Regular.ttf",30)
-    text_1 = fonts2.render("Hello,my name is Denys!",True,WHITE)
-    text_2 = fonts.render("This game is a copy of Tetris developed by me on paygame.",True,WHITE)
-    text_3 = fonts.render("This project will be presented at the competition created by the Logica school.",True,WHITE)    
-    text_4 = fonts.render("For me, this is the first experience of developing such games, even independently.",True,WHITE)
-    text_5 = fonts.render("I hope you enjoyed it because it gives me strength to study hard.",True,WHITE)
-    text_7 = fonts2.render("Inst Denys_Makukh",True,WHITE)
-    text_8 = fonts.render("Tetris is a well-known block-based puzzle game in which you swop",True,WHITE)
-    text_9 = fonts.render("making solid horizontal lines with falling blocks or tetrominos",True,WHITE)
-    text_10 = fonts.render("Rotate and move the falling tetrominoes to match them with the tier lines of the stack",True,WHITE)
-    text_11= fonts.render("and preventing it from touching the top of the screen",True,WHITE)
-    window.blit(text_1,(230,120))
-    window.blit(text_2,(130,170))
-    window.blit(text_3,(75,220))
-    window.blit(text_4,(65,270))
-    window.blit(text_5,(110,320))
-    window.blit(text_7 , (20,640))
-    window.blit(text_8 , (100,380))
-    window.blit(text_9 , (110, 430))
-    window.blit(text_10, (30, 480))
-    window.blit(text_11, (130, 530))
+def start(window,text_font):
+    window.fill(GRAY)
+    start_text = text_font.render('PRESS   F   TO   START',True,WHITE)
+    window.blit(start_text,(200,310) )
+    
+
+# #відтворення екарану "about"
+# def draw_about(window):
+#     fonts = pygame.font.Font("fonts/Freeman-Regular.ttf",22)
+#     fonts2 = pygame.font.Font("fonts/Freeman-Regular.ttf",30)
+#     text_1 = fonts2.render("Hello,my name is Denys!",True,WHITE)
+#     text_2 = fonts.render("This game is a copy of Tetris developed by me on paygame.",True,WHITE)
+#     text_3 = fonts.render("This project will be presented at the competition created by the Logica school.",True,WHITE)    
+#     text_4 = fonts.render("For me, this is the first experience of developing such games, even independently.",True,WHITE)
+#     text_5 = fonts.render("I hope you enjoyed it because it gives me strength to study hard.",True,WHITE)
+#     text_7 = fonts2.render("Inst Denys_Makukh",True,WHITE)
+#     text_8 = fonts.render("Tetris is a well-known block-based puzzle game in which you swop",True,WHITE)
+#     text_9 = fonts.render("making solid horizontal lines with falling blocks or tetrominos",True,WHITE)
+#     text_10 = fonts.render("Rotate and move the falling tetrominoes to match them with the tier lines of the stack",True,WHITE)
+#     text_11= fonts.render("and preventing it from touching the top of the screen",True,WHITE)
+#     window.blit(text_1,(230,120))
+#     window.blit(text_2,(130,170))
+#     window.blit(text_3,(75,220))
+#     window.blit(text_4,(65,270))
+#     window.blit(text_5,(110,320))
+#     window.blit(text_7 , (20,640))
+#     window.blit(text_8 , (100,380))
+#     window.blit(text_9 , (110, 430))
+#     window.blit(text_10, (30, 480))
+#     window.blit(text_11, (130, 530))
 
 #Головні змінні ,значання і т.д
 def main(): 
@@ -450,7 +456,7 @@ def main():
                     
                     #Коли мишка попадає на координати кнопки відбувається певна подія
                     if btn_play.x <= x <= btn_play.x + btn_play.width and btn_play.y <= y <= btn_play.y + btn_play.height:
-                        screen = 'run'
+                        screen = 'start'
                         
                     if btn_settings.x <= x <= btn_settings.x + btn_settings.width and btn_settings.y <= y <= btn_settings.y + btn_settings.height:
                         screen = 'menu_settings'
@@ -463,6 +469,16 @@ def main():
                         
             pygame.display.update()
 
+        if screen == 'start':
+            start(window,pygame.font.Font('fonts/arcade.TTF', 55))
+            keys = pygame.key.get_pressed()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    
+            if keys[pygame.K_f]:    
+                screen = 'run'
+            pygame.display.update()
         #Візуальна частина екрану "run"
         if screen == 'run':
             window.blit(bg_game,(0,0))
@@ -738,7 +754,7 @@ def main():
             about_bg.reset(window)
             return_about_btn.reset(window)
             about_title.reset(window)
-            draw_about(window)
+            # draw_about(window)
             
             #Обробка подій на екрані             
             for event in pygame.event.get():
