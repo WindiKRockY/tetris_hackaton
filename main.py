@@ -320,7 +320,15 @@ def new_best_result(window,text_font,best_result=0):
 def start(window,text_font):
     window.fill(GRAY)
     start_text = text_font.render('PRESS   F   TO   START',True,WHITE)
-    window.blit(start_text,(200,310) )
+    window.blit(start_text,(190,310) )
+
+def timer(window , text_font, start_time):
+    now = time.get_ticks()
+    current_time = int((now - start_time) / 1000)
+    time_text = text_font.render('Time',True,WHITE)
+    time_text1 = text_font.render(str(current_time),True,WHITE)
+    window.blit(time_text , (575 , 540))
+    window.blit(time_text1 , (575,600))
     
 
 # #відтворення екарану "about"
@@ -387,7 +395,7 @@ def main():
     btn_play = Button(" S  t  a  r  t", 270, 170, 220, 170, WHITE, 75)
     quit_menu_btn = Button("Q  U  I  T", 40 , 560 , 150 , 150 , WHITE ,65)
     btn_settings = Button("S  E  T  T  I  N  G  S", 275, 290, 220, 170, WHITE, 72)
-    btn_title = Title(" T  E  T  R  I  S", 255, 2, 220, 170, BLACK, 75) 
+    btn_title = Title(" T  E  T  R  I  S", 260, 2, 220, 170, BLACK, 75) 
     about_btn = Button(" A  B  O  U T ",275,410,220,170,WHITE,75)
     
     #Екран "control_settings"
@@ -434,10 +442,12 @@ def main():
     current_row, current_col = 0, 0
     fall_time = 0
     screen = 'menu'
+    start_time = time.get_ticks()
+
     while run:
         if screen == 'menu':            
             #Візуальна частина екрану "menu"
-            pygame.time.wait(1000)
+            #pygame.time.wait(1000)
             menu_bg.reset(window)
             btn_play.reset(window)
             btn_settings.reset(window)
@@ -484,6 +494,7 @@ def main():
             window.blit(bg_game,(0,0))
             gray_bg.reset(window)    
             btn_pause.reset(window)   
+            timer(window,MINI_TEXT_FONT,start_time)
             levels(points,fall_time,clock)
             draw_board(window, board, current_block, current_row, current_col, block_color,points,best_result)
             
